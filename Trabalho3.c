@@ -2,7 +2,286 @@
 #include <string.h>
 #include <stdlib.h>
 
-// 6
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+struct Aluno 
+{
+    char nome[50];
+    int matricula;
+    float nota;
+};
+
+struct Produto 
+{
+    int codigo;
+    char descricao[50];
+    float preco;
+    int estoque;
+};
+
+struct Funcionario 
+{
+    char nome[50];
+    char cargo[50];
+    float salario;
+};
+
+struct Livro 
+{
+    char titulo[50];
+    char autor[50];
+    int ano;
+    int paginas;
+};
+
+struct Cidade 
+{
+    char nome[50];
+    char estado[3];
+    long populacao;
+    float area;
+};
+
+struct Paciente 
+{
+    char nome[50];
+    int idade;
+    float peso;
+    float altura;
+};
+
+struct Pedido 
+{
+    int numeroPedido;
+    char nomeCliente[50];
+    int data;
+    float valorTotal;
+};
+
+struct Atleta 
+{
+    char nome[50];
+    char pais[50];
+    char modalidade[50];
+    float tempoSegundos;
+};
+
+struct Veiculo 
+{
+    char placa[20];
+    char marca[50];
+    char modelo[50];
+    int ano;
+    float km;
+};
+
+struct Candidato 
+{
+    char nome[50];
+    float pontuacao;
+    int experienciaAnos;
+};
+
+
+void exercicio1() 
+{
+    struct Aluno v[MAX], temp;
+    int n, i, j;
+
+    scanf("%d", &n);
+
+    for(i=0;i<n;i++) 
+    
+    {
+        scanf(" %[^\n]", v[i].nome);
+        scanf("%d", &v[i].matricula);
+        scanf("%f", &v[i].nota);
+    }
+
+    for(i=0;i<n-1;i++) 
+    {
+        for(j=0;j<n-i-1;j++) 
+        {
+            if(v[j].nota < v[j+1].nota) 
+            {
+                temp = v[j];
+                v[j] = v[j+1];
+                v[j+1] = temp;
+            }
+        }
+    }
+
+    for(i=0;i<n;i++) 
+    {
+        printf("%s - %.2f\n", v[i].nome, v[i].nota);
+    }
+}
+
+void exercicio2() 
+{
+    struct Produto v[MAX], temp;
+    int n, i, j;
+    float max;
+
+    scanf("%d", &n);
+
+    for(i=0;i<n;i++) 
+    {
+        scanf("%d", &v[i].codigo);
+        scanf(" %[^\n]", v[i].descricao);
+        scanf("%f", &v[i].preco);
+        scanf("%d", &v[i].estoque);
+    }
+
+    for(i=0;i<n-1;i++) 
+    {
+        for(j=0;j<n-i-1;j++) 
+        {
+            if(v[j].preco > v[j+1].preco) 
+            {
+                temp = v[j];
+                v[j] = v[j+1];
+                v[j+1] = temp;
+            }
+        }
+    }
+
+    scanf("%f", &max);
+
+    for(i=0;i<n;i++) 
+    {
+        if(v[i].preco <= max) 
+        {
+            printf("%s - %.2f\n", v[i].descricao, v[i].preco);
+        }
+    }
+}
+
+void exercicio3() 
+{
+    struct Funcionario v[MAX], temp;
+    int n = 5, i, j;
+    float soma = 0, media;
+
+    for(i=0;i<n;i++) 
+    {
+        scanf(" %[^\n]", v[i].nome);
+        scanf(" %[^\n]", v[i].cargo);
+        scanf("%f", &v[i].salario);
+        soma += v[i].salario;
+    }
+
+    media = soma / n;
+
+    for(i=0;i<n-1;i++) 
+    {
+        for(j=0;j<n-i-1;j++) 
+        {
+            if(strcmp(v[j].nome, v[j+1].nome) > 0) 
+            {
+                temp = v[j];
+                v[j] = v[j+1];
+                v[j+1] = temp;
+            }
+        }
+    }
+
+    for(i=0;i<n;i++) 
+    {
+        printf("%s - ", v[i].nome);
+        if(v[i].salario > media)
+            printf("Acima\n");
+        else
+            printf("Abaixo\n");
+    }
+}
+
+void exercicio4() 
+{
+    struct Livro v[MAX], temp;
+    int n, i, j, swaps = 0;
+
+    scanf("%d", &n);
+
+    for(i=0;i<n;i++) 
+    {
+        scanf(" %[^\n]", v[i].titulo);
+        scanf(" %[^\n]", v[i].autor);
+        scanf("%d", &v[i].ano);
+        scanf("%d", &v[i].paginas);
+    }
+
+    for(i=0;i<n-1;i++) 
+    {
+        for(j=0;j<n-i-1;j++) 
+        {
+            if(v[j].ano > v[j+1].ano) 
+            {
+                temp = v[j];
+                v[j] = v[j+1];
+                v[j+1] = temp;
+                swaps++;
+            }
+        }
+    }
+
+    for(i=0;i<n;i++) 
+    {
+        printf("%s - %d\n", v[i].titulo, v[i].ano);
+    }
+
+    printf("Trocas: %d\n", swaps);
+}
+
+void exercicio5() 
+{
+    struct Cidade v[MAX], temp;
+    int n, i, j, trocou, parada = 0;
+
+    scanf("%d", &n);
+
+    for(i=0;i<n;i++) 
+    {
+        scanf(" %[^\n]", v[i].nome);
+        scanf("%s", v[i].estado);
+        scanf("%ld", &v[i].populacao);
+        scanf("%f", &v[i].area);
+    }
+
+    for(i=0;i<n-1;i++) 
+    {
+        trocou = 0;
+
+        for(j=0;j<n-i-1;j++) 
+        {
+            if(v[j].populacao > v[j+1].populacao) 
+            {
+                temp = v[j];
+                v[j] = v[j+1];
+                v[j+1] = temp;
+                trocou = 1;
+            }
+        }
+
+        if(trocou == 0) 
+        {
+            parada = i+1;
+            break;
+        }
+    }
+
+    for(i=0;i<n;i++) 
+    {
+        printf("%s - %ld\n", v[i].nome, v[i].populacao);
+    }
+
+    printf("Parou na passada: %d\n", parada);
+}
+
 void exercicio6() 
 {
     struct Paciente v[MAX], chave;
@@ -38,7 +317,6 @@ void exercicio6()
     }
 }
 
-// 7
 void exercicio7() 
 {
     struct Pedido v[MAX], chave;
@@ -72,7 +350,6 @@ void exercicio7()
     printf("Total: %.2f\n", soma);
 }
 
-// 8
 void exercicio8() 
 {
     struct Atleta v[MAX], chave;
@@ -108,7 +385,6 @@ void exercicio8()
     }
 }
 
-// 9 
 void exercicio9() 
 {
     struct Veiculo v[MAX], chave;
@@ -141,7 +417,6 @@ void exercicio9()
     }
 }
 
-//  10 
 void exercicio10() 
 {
     struct Candidato v[MAX], chave;
@@ -177,7 +452,6 @@ void exercicio10()
     }
 }
 
-// MAIN
 int main() 
 {
     int op;
